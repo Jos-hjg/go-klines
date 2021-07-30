@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="kline_container"></div>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.mousewheel.js"></script>
+    <script src="dist/kline.js"></script>
+    <script type="text/javascript" src="./script/product.js"></script>
+    <script>
+        kline = new Kline({
+            element: "#kline_container",
+            symbol: "BSC_USD",
+            symbolName: "Binance",
+            height: document.body.clientHeight,
+            width: document.body.clientWidth,
+            theme: "dark",
+            language: "zh-cn",
+            ranges: ["1w", "1d", "1h", "30m", "15m", "5m", "1m", "line"],
+            limit: 1000,
+            intervalTime: 1000,
+            depthWidth: 100,
+        });
+
+        let newlyId = 0
+        let datas = GetRecordList()
+        
+
+        params = "";
+        kline.onRequestData = function onRequestData(params, callback) {
+            datas = GetCurrentRecord(datas)
+            
+
+            let data = {
+                success: true,
+                data: {
+                    depths: {
+                        asks: [
+                        ],
+                        bids: [
+
+                        ]
+                    },
+                    lines: datas,
+                }
+            }
+            callback(data)
+        }
+        kline.draw();
+    </script>
+<!--<script src="./script/product.js"></script>-->
+</body>
+
+</html>
