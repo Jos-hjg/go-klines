@@ -8,16 +8,15 @@ type UserLogin struct {
 }
 
 var LoginValidation = ErrorType{
-	"Username":{
-		"required":"用户名称必须",
-
+	"Username": {
+		"required": "用户名称必须",
 	},
-	"Password":{
-		"required":"密码必须",
+	"Password": {
+		"required": "密码必须",
 	},
 }
 
-func LoginError(errs validator.ValidationErrors) map[string]string{
+func LoginError(errs validator.ValidationErrors) map[string]string {
 	errMap := map[string]string{}
 	for _, err := range errs {
 		errMap[err.Field()] = LoginValidation[err.Field()][err.Tag()]
